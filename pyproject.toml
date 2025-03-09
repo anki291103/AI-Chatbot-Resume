@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.poetry]
+name = "Ankita-AI-Resume"
+version = "0.1.0"
+description = "Your project description"
+authors = ["Your Name "]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^3.1.0"
+requests = "^2.25.1"
+numpy = "^1.21.0"
+pandas = "^1.3.0"
+scipy = "^1.7.0"
