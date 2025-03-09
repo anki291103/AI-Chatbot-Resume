@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot Resume</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Moving Gradient Background */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f, #1a1a1a, #232323);
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease infinite;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* HEADER */
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background: transparent;
+            font-size: 26px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.8); }
+            100% { text-shadow: 0 0 20px rgba(0, 255, 255, 1); }
+        }
+
+        .container {
+            display: flex;
+            width: 95%;
+            height: 85vh;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        @keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }  /* Reduce movement */
+    100% { transform: translateY(0px); }
+}
+#chatbox:hover {
+    box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.6);
+    border-color: cyan;
+    transition: 0.3s ease-in-out;
+    animation: none;
+}
+
+.typing-dots {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 2px;
+}
+
+.typing-dots span {
+    display: inline-block;
+    animation: waterWave 0.4s infinite ease-in-out;
+}
+
+/* Stagger animation for each dot */
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+.typing-dots span:nth-child(2) { animation-delay: 0.05s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.1s; }
+.typing-dots span:nth-child(4) { animation-delay: 0.15s; }
+.typing-dots span:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes waterWave {
+    0% { transform: translateY(0); opacity: 1; }
+    25% { transform: translateY(-5px); opacity: 0.8; }
+    50% { transform: translateY(0); opacity: 1; }
+    75% { transform: translateY(5px); opacity: 0.8; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+/* CHATBOT SECTION */
+.chatbot-container {
+    position: relative;
+    width: 45%;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 25px; /* Rounded corners */
+    box-shadow: 0px 4px 15px rgba(129, 253, 253, 0.3);
+    animation: floating 5s ease-in-out infinite; /* Slower animation */
+    overflow: hidden; /* Ensures border effect stays within */
+}
+
+
+
+
+#chatbox {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 20px;
+    height: 300px;
+    overflow-y: auto;
+    width: 90%;
+    border-radius: 10px;
+    border: 1px solid #0ff;
+    position: relative;
+    animation: floating 3s ease-in-out infinite; /* Apply floating ONLY here */
+}
+
+        #typingIndicator {
+            font-size: 14px;
+            color: #0ff;
+            font-style: italic;
+            margin-top: 5px;
+            display: none;
+            position: absolute;
+            bottom: 5px;
+            left: 15px;
+        }
+
+        .input-area {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #0ff;
+            border-radius: 8px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Neon Glowing Buttons */
+        button {
+            padding: 10px 15px;
+            background: #0ff;
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.7);
+        }
+
+        button:hover {
+            background: white;
+            color: #0ff;
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 1);
+        }
+
+        /* PROFILE INFO - Now part of the Webpage */
+        .profile {
+    width: 60%; /* Full width */
+    text-align: center; /* Center align everything */
+    padding: 20px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap'); /* Funky Font */
+
+.profile {
+    width: 40%;
+    text-align: center;
+    padding: 10px;
+}
+.funky-box {
+    background: rgba(0, 255, 255, 0.2); /* Transparent neon cyan box */
+    color: #0ff;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.5);
+    margin-top: 15px;
+    width: fit-content; /* Adjust to fit content */
+    display: inline-block;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.funky-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 25px rgba(0, 255, 255, 0.8);
+}
+
+.profile-name {
+    font-family: 'Pacifico', cursive; /* Funky, handwritten-style font */
+    font-size: 30px; /* Larger than typing effect */
+    font-weight: bold;
+    color: #0ff;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+}
+
+.typing {
+    font-size: 25px; /* Slightly smaller */
+    font-weight: bold;
+    color: #0ff;
+    display: inline-block;
+}
+
+
+
+        .profile-img {
+    width: 200px; /* Adjust size as needed */
+    height: 320px;
+    display: block;
+    border-radius: 0px; /* No rounded corners */
+    border: none; /* No border */
+    box-shadow: none; /* No extra effects */
+}
+
+        .profile h2 {
+            font-size: 24px;
+            color: #0ff;
+        }
+
+        .profile p {
+            font-size: 16px;
+            color: #bbb;
+        }
+
+       
+        .typing-animation {
+    font-size: 14px;
+    color: #0ff;
+    font-style: italic;
+    margin-top: 5px;
+    display: none;  /* Hidden initially */
+}
+
+/* AnkiBot message styling */
+.ankibot-message {
+    color: rgba(0, 255, 255, 0.8); /* Exact same cyan color */
+    font-weight: bold;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        🚀 <span style="background: linear-gradient(to right, cyan, lime); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Welcome to My AI Chatbot Resume</span>
+    </div>
+
+    <div class="container">
+        <!-- Chatbot Section -->
+        <div class="chatbot-container">
+
+            <h2 style="color: cyan;">Chat with My AI Resume 🤖</h2>
+            <div id="chatbox">
+                <p><strong class="ankibot-message">AnkiBot:</strong> Hey there! I’m not just a resume, I’m an experience. Ask me anything!</p>
+            </div>
+            <p id="typingIndicator">AnkiBot is typing...</p>
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="Type your message..." />
+<button id="micButton" onclick="startSpeechRecognition()">
+    🎤 <!-- Mic Icon -->
+</button>
+<button onclick="sendMessage()">Send</button>
+ </div>
+        </div>
+
+        <!-- Profile Section Directly on Webpage -->
+        <div class="profile">
+            <h1 class="profile-name">Hello!!!!!, I am Ankita Jha</h1> <!-- Funky Font & Larger -->
+            <h2>
+                <span class="typing"></span>
+            </h2>    
+        
+            <div style="display: flex; justify-content: center;">
+                <img src="{{ url_for('static', filename='mee.jpg') }}" alt="Profile Picture" class="profile-img">
+            </div>
+        
+            
+        
+            <!-- Funky Box for AI Chatbot Call-to-Action -->
+            <divdiv class="funky-box">
+                🚀 Wanna know what makes me the perfect fit? <br> 
+                <span style="font-weight: bold;">👈 She will tell you!</span> Chat with my AI...
+            </div>
+        </div>
+         
+    </div>
+
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    typeEffect(); // Start typing effect
+    document.getElementById("micButton").addEventListener("click", startSpeechRecognition);
+    document.getElementById("userInput").addEventListener("keypress", function(event) {
+        if (event.keyCode === 13) { // 13 is the Enter key
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+});
+
+// **Voice-to-Text Functionality**
+function startSpeechRecognition() {
+    var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        document.getElementById("userInput").value = event.results[0][0].transcript;
+    };
+
+    recognition.onerror = function(event) {
+        alert("Speech recognition error: " + event.error);
+    };
+}
+
+// **Send Message Function**
+function sendMessage() {
+    var userInput = document.getElementById("userInput").value.trim();
+    if (userInput === "") return;
+
+    var chatbox = document.getElementById("chatbox");
+
+    // Display user's message in the chat
+    chatbox.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+    document.getElementById("userInput").value = "";
+
+    // Show typing animation inside the chat
+    var typingMessage = document.createElement("p");
+    typingMessage.id = "typingMessage";
+    typingMessage.innerHTML = `<strong>AnkiBot:</strong> <span class="typing-dots"></span>`;
+    chatbox.appendChild(typingMessage);
+
+    let dotsContainer = typingMessage.querySelector(".typing-dots");
+
+    // Create 5 animated dots
+    for (let i = 0; i < 5; i++) {
+        let dot = document.createElement("span");
+        dot.textContent = ".";
+        dot.style.animation = `waterWave 1.5s infinite ease-in-out ${i * 0.2}s`;
+        dotsContainer.appendChild(dot);
+    }
+
+    // Scroll to the latest message smoothly
+    chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
+
+    // Introduce a delay before fetching the bot's response (1 second)
+    setTimeout(() => {
+        fetch("/get_response", {
+            method: "POST",
+            body: JSON.stringify({ message: userInput }),
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(response => response.json())
+        .then(data => {
+            let botResponse = data.response;
+
+            // If the response is "SHOW_SKILL_CHART", display the chart
+            if (botResponse === "SHOW_SKILL_CHART") {
+                displaySkillsChart();
+                typingMessage.remove(); // Remove typing message after showing chart
+                return;
+            }
+
+            // Convert newline-based lists into proper HTML bullet points
+            if (botResponse.includes("\n- ")) {
+                let points = botResponse.split("\n- ").slice(1);
+                botResponse = "<ul><li>" + points.join("</li><li>") + "</li></ul>";
+            }
+
+            // Ensure links are clickable by rendering HTML properly
+            botResponse = botResponse.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+
+            let plainTextMessage = botResponse.replace(/<[^>]*>/g, ''); // Strip HTML for typing effect
+            typeMessage(typingMessage, plainTextMessage, 0, () => {
+                typingMessage.innerHTML = `<strong>AnkiBot:</strong> ${botResponse}`; // Replace with full HTML after typing
+                chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
+            });
+
+        });
+    }, 1000);
+}
+// //typingMessage.innerHTML = `<strong>AnkiBot:</strong> ${botResponse}`;
+// chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
+//         });
+//     }, 1000);
+// }
+// Typing Effect: Type out the message first as plain text, then replace it with formatted HTML
+function typeMessage(element, message, index, callback) {
+    if (index < message.length) {
+        element.innerHTML += message.charAt(index);
+        setTimeout(() => typeMessage(element, message, index + 1, callback), 15);
+    } else {
+        setTimeout(callback, 200); // After typing completes, execute callback
+    }
+}
+
+
+// **Typing Effect for Dynamic Messages**
+const typedText = ["a Software Engineer", "an AI Enthusiast", "a Web Developer", "a Problem Solver"];
+let i = 0, j = 0, isDeleting = false;
+
+function typeEffect() {
+    const typingElement = document.querySelector(".typing");
+    if (!typingElement) return;
+
+    let currentText = typedText[i];
+
+    if (isDeleting) {
+        j--; // Decrease character count when deleting
+    } else {
+        j++; // Increase character count when typing
+    }
+
+    typingElement.textContent = currentText.substring(0, j);
+
+    if (!isDeleting && j === currentText.length) {
+        setTimeout(() => { isDeleting = true; typeEffect(); }, 500);
+        return;
+    } 
+
+    if (isDeleting && j === 0) {
+        isDeleting = false;
+        i = (i + 1) % typedText.length;
+    }
+
+    setTimeout(typeEffect, isDeleting ? 50 : 100); // Faster deletion, normal typing
+}
+
+// **Function to Display Skills Chart**
+function displaySkillsChart() {
+    var chatbox = document.getElementById("chatbox");
+
+    // Create a new container for the chart
+    var chartContainer = document.createElement("div");
+    chartContainer.style.width = "350px";
+    chartContainer.style.margin = "20px auto";
+    chartContainer.innerHTML = `<canvas id="skillsChart"></canvas>`;
+    chatbox.appendChild(chartContainer);
+
+    // Scroll to make sure the chart is visible
+    chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
+
+    // Skill data for the chart
+    var skills = ["Python", "Java", "SQL", "JavaScript", "ML"];
+    var skillLevels = [70, 85, 80, 75, 70];
+
+    // Generate bar chart using Chart.js
+    new Chart(document.getElementById("skillsChart"), {
+        type: "bar",
+        data: {
+            labels: skills,
+            datasets: [{
+                label: "Skill Proficiency",
+                data: skillLevels,
+                backgroundColor: [
+                    "#3498db", // Blue
+                    "#e74c3c", // Red
+                    "#2ecc71", // Green
+                    "#f39c12", // Orange
+                    "#9b59b6"  // Purple
+                ],
+                borderColor: "rgba(0, 0, 0, 0.2)",
+                borderWidth: 1,
+                borderRadius: 5, // Rounded bars
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: { font: { size: 10 }, color: "#fff" }
+                },
+                x: {
+                    ticks: { font: { size: 10 }, color: "#fff" }
+                }
+            },
+            plugins: {
+                legend: { display: false } // Hide legend for cleaner look
+            }
+        }
+    });
+}
+</script>
+
+</body>
+</html>
+
+    
